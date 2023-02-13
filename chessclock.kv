@@ -1,0 +1,110 @@
+ClockScreen:
+
+
+<TimeEntryScreen>:
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            id: timeenterheading
+            text: 'Slect Times'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+            size_hint: (1, 0.2)
+            font_size: 100
+            font_name: 'fonts/Lcd.ttf'
+
+
+        GridLayout:
+            rows: 4
+            cols: 1
+            spacing: 40
+            size_hint: (0.5, 0.8)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            Button:
+                id: one_minutes
+                text: '01:00'
+                size_hint: (5, 0.2)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: three_minutes
+                text: '03:00'
+                size_hint: (5, 0.2)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+                
+
+            Button:
+                id: five_minutes
+                text: '05:00'
+                size_hint: (5, 0.2)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: ten_minutes
+                text: '10:00'
+                size_hint: (5, 0.2)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+    
+<ClockScreen>:
+
+    BoxLayout:
+        orientation: 'horizontal'
+        
+        ToggleButton:
+            id: btn_left
+            size_hint: (0.4, 1)
+            color: (0, 1, 0, 1)
+            text: 'None yet'
+            font_size: 50
+            font_name: 'fonts/Lcd.ttf'
+            background_color: (0, 1, 1, 1)
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 20
+            size_hint: (0.2, 1)
+            
+            Button:
+                id: stop_resume
+                size_hint: (0.6, 0.25)
+                pos_hint: {'center_x': 0.5}
+                #background_color: (0, 1, 1, 1)
+                background_normal: './icons/pause_icon.png'
+                background_down: './icons/pause_icon_down.png'
+
+
+            Button:
+                id: reset
+                size_hint: (0.6, 0.25)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0, 1, 1, 1)
+               #background_normal: '/icons/reset_icon.png'
+
+            Button:
+                id: time_settings
+                size_hint: (0.6, 0.25)
+                pos_hint: {'center_x': 0.5}
+                background_color: (0, 1, 1, 1)
+                #background_normal: '/icons/settings_icon.png'
+
+        
+        ToggleButton:
+            id: btn_left
+            size_hint: (0.4, 1)
+            color: (0, 1, 0, 1)
+            text: 'None yet'
+            font_size: 50
+            font_name: 'fonts/Lcd.ttf'
+            background_color: (0, 1, 1, 1)
+
+
+
+
+                
