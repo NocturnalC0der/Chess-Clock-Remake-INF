@@ -26,7 +26,59 @@ class TimeEntryScreen(BoxLayout):
     pass
 
 class ClockScreen(BoxLayout):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.demo_time = ('2', '30')
+        self.minutes = self.demo_time[0] if len(self.demo_time[0]) == 2 else '0' + self.demo_time[0]
+        self.seconds = self.demo_time[1] if len(self.demo_time[1]) == 2 else '0' + self.demo_time[1]
+
+        self.time = self.minutes + ':' + self.seconds
+
+        self.time_running = False
+
+    def start_switch_time_left(self, widget):
+        self.time_running = True
+        total_seconds = int(self.minutes) * 60 + int(self.seconds)
+
+        while total_seconds > 0 and self.time_running:
+            total_seconds -= 1
+
+            minutes, seconds = divmod(total_seconds, 60)
+
+            widget.text = f'{minutes:02d}:{seconds:02d}'
+
+            time.sleep(1)
+
+
+    def start_switch_time_right(self, widget):
+        self.time_running = True
+        total_seconds = int(self.minutes) * 60 + int(self.seconds)
+
+        while total_seconds > 0 and self.time_running:
+            total_seconds -= 1
+
+            minutes, seconds = divmod(total_seconds, 60)
+
+            widget.text = f'{minutes:02d}:{seconds:02d}'
+
+            time.sleep(1)
+
+
+
+
+    def stop_resume(self, widget): 
+        if self.time_running: 
+            widget.background_normal = './icons/play_icon.png'
+            widget.background_down = './icons/play_icon_down.png'
+            self.time_running = False
+        
+        else:
+            widget.background_normal = './icons/pause_icon.png'
+            widget.background_down = './icons/pause_icon_down.png'
+            self.time_running = True
+    
 
 class ChessClockApp(App):
     pass
