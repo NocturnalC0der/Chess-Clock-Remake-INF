@@ -57,52 +57,60 @@ ClockScreen:
     BoxLayout:
         orientation: 'horizontal'
         
-        ToggleButton:
+        Button:
             id: btn_left
             size_hint: (0.4, 1)
             color: (0, 1, 0, 1)
-            text: 'None yet'
+            text: root.time
             font_size: 50
             font_name: 'fonts/Lcd.ttf'
             background_color: (0, 1, 1, 1)
+            on_release: root.start_switch_time_left(self)
 
         BoxLayout:
             orientation: 'vertical'
-            spacing: 20
+            spacing: 10
             size_hint: (0.2, 1)
             
             Button:
                 id: stop_resume
-                size_hint: (0.6, 0.25)
+                size_hint: (0.6, 0.1)
                 pos_hint: {'center_x': 0.5}
-                #background_color: (0, 1, 1, 1)
                 background_normal: './icons/pause_icon.png'
                 background_down: './icons/pause_icon_down.png'
+                on_release: root.stop_resume(self)
 
 
             Button:
                 id: reset
-                size_hint: (0.6, 0.25)
+                size_hint: (0.6, 0.1)
                 pos_hint: {'center_x': 0.5}
-                background_color: (0, 1, 1, 1)
-               #background_normal: '/icons/reset_icon.png'
+                background_normal: './icons/reset_icon.png'
+                background_down: './icons/reset_icon_down.png'
 
             Button:
                 id: time_settings
-                size_hint: (0.6, 0.25)
+                size_hint: (0.6, 0.1)
                 pos_hint: {'center_x': 0.5}
-                background_color: (0, 1, 1, 1)
-                #background_normal: '/icons/settings_icon.png'
+                background_normal: './icons/settings_icon.png'
+                background_down: './icons/settings_icon_down.png'
 
         
-        ToggleButton:
+        Button:
             id: btn_left
             size_hint: (0.4, 1)
             color: (0, 1, 0, 1)
-            text: 'None yet'
+            text: root.time
             font_size: 50
             font_name: 'fonts/Lcd.ttf'
             background_color: (0, 1, 1, 1)
+            on_release: root.start_switch_time_right(self)
+
+
+
+
+                
+
 
 
 
