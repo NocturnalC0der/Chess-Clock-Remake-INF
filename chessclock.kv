@@ -57,24 +57,34 @@ ClockScreen:
     BoxLayout:
         orientation: 'horizontal'
         
-        Button:
-            id: btn_left
-            size_hint: (0.4, 1)
-            color: (0, 1, 0, 1)
-            text: root.time
-            font_size: 50
-            font_name: 'fonts/Lcd.ttf'
-            background_color: (0, 1, 1, 1)
-            on_release: root.start_switch_time_left(self)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.35, 1)
+
+            Label:
+                id: time_left
+                text: root.time_left
+                size_hint: (1, 0.25)
+                font_size: 80
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: btn_left
+                size_hint: (1, 0.75)
+                color: (0, 1, 0, 1)
+                font_size: 50
+                font_name: 'fonts/Lcd.ttf'
+                background_color: (0, 1, 1, 1)
+                on_release: root.start_switch_time_left(self)
 
         BoxLayout:
             orientation: 'vertical'
             spacing: 10
-            size_hint: (0.2, 1)
+            size_hint: (0.3, 1)
             
             Button:
                 id: stop_resume
-                size_hint: (0.6, 0.1)
+                size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
                 background_normal: './icons/pause_icon.png'
                 background_down: './icons/pause_icon_down.png'
@@ -83,31 +93,43 @@ ClockScreen:
 
             Button:
                 id: reset
-                size_hint: (0.6, 0.1)
+                size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
                 background_normal: './icons/reset_icon.png'
                 background_down: './icons/reset_icon_down.png'
 
             Button:
                 id: time_settings
-                size_hint: (0.6, 0.1)
+                size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
                 background_normal: './icons/settings_icon.png'
                 background_down: './icons/settings_icon_down.png'
 
         
-        Button:
-            id: btn_left
-            size_hint: (0.4, 1)
-            color: (0, 1, 0, 1)
-            text: root.time
-            font_size: 50
-            font_name: 'fonts/Lcd.ttf'
-            background_color: (0, 1, 1, 1)
-            on_release: root.start_switch_time_right(self)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.35, 1)
+
+            Label:
+                id: time_right
+                text: root.time_right
+                size_hint: (1, 0.25)
+                font_size: 80
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: btn_right
+                size_hint: (1, 0.75)
+                color: (0, 1, 0, 1)
+                font_size: 50
+                font_name: 'fonts/Lcd.ttf'
+                background_color: (0, 1, 1, 1)
+                on_release: root.start_switch_time_right(self)
 
 
 
+
+                
 
                 
 
