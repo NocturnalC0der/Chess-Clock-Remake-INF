@@ -26,44 +26,83 @@ class TimeEntryScreen(BoxLayout):
     pass
 
 class ClockScreen(BoxLayout):
+    
+    time_left = StringProperty()
+    time_right = StringProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.demo_time = ('2', '30')
+        self.demo_time = ('2', '10')
         self.minutes = self.demo_time[0] if len(self.demo_time[0]) == 2 else '0' + self.demo_time[0]
         self.seconds = self.demo_time[1] if len(self.demo_time[1]) == 2 else '0' + self.demo_time[1]
 
-        self.time = self.minutes + ':' + self.seconds
+        self.time_left = f'{self.minutes}:{self.seconds}'
+        self.time_right = f'{self.minutes}:{self.seconds}'
+
+        self.total_seconds_left = int(self.minutes) * 60 + int(self.seconds)
+        self.total_seconds_right = int(self.minutes) * 60 + int(self.seconds)
+
+        self.scheduled_left = False
+        self.scheduled_right = False
 
         self.time_running = False
 
     def start_switch_time_left(self, widget):
         self.time_running = True
-        total_seconds = int(self.minutes) * 60 + int(self.seconds)
 
-        while total_seconds > 0 and self.time_running:
-            total_seconds -= 1
+        # minutes, seconds = self.minutes, self.seconds
+        # time_left = f'{minutes}:{seconds}'
+        if self.scheduled_left:
+            Clock.unschedule(self.countdown_left)
+            self.scheduled_left = False
 
-            minutes, seconds = divmod(total_seconds, 60)
+        if not self.scheduled_right:
+            Clock.schedule_interval(self.countdown_right, 1)
+            self.scheduled_right = True
 
-            widget.text = f'{minutes:02d}:{seconds:02d}'
 
-            time.sleep(1)
+    def countdown_left(self, dt):
+
+        if self.total_seconds_left > 0 and self.time_running:
+            print('time running', self.ids.time_left.text)
+            self.total_seconds_left -= 1
+
+            minutes, seconds = divmod(self.total_seconds_left, 60)
+
+            self.time_left = f'{minutes}:{seconds}'
+
+        else:
+            Clock.unschedule(self.countdown_left)
+            self.scheduled_left = False
 
 
     def start_switch_time_right(self, widget):
         self.time_running = True
-        total_seconds = int(self.minutes) * 60 + int(self.seconds)
 
-        while total_seconds > 0 and self.time_running:
-            total_seconds -= 1
+        # minutes, seconds = self.minutes, self.seconds
+        # time_left = f'{minutes}:{seconds}'\
+        if self.scheduled_right:
+            Clock.unschedule(self.countdown_right)
+            self.scheduled_right = False
 
-            minutes, seconds = divmod(total_seconds, 60)
+        if not self.scheduled_left:
+            Clock.schedule_interval(self.countdown_left, 1)
+            self.scheduled_left = True
+    
+    def countdown_right(self, dt):
 
-            widget.text = f'{minutes:02d}:{seconds:02d}'
+        if self.total_seconds_right > 0 and self.time_running:
+            print('time running', self.ids.time_right.text)
+            self.total_seconds_right -= 1
 
-            time.sleep(1)
+            minutes, seconds = divmod(self.total_seconds_right, 60)
+
+            self.time_right = f'{minutes}:{seconds}'
+
+        else:
+            Clock.unschedule(self.countdown_right)
+            self.scheduled_right = False
 
 
 
@@ -72,6 +111,14 @@ class ClockScreen(BoxLayout):
         if self.time_running: 
             widget.background_normal = './icons/play_icon.png'
             widget.background_down = './icons/play_icon_down.png'
+            #stop_right
+            # Clock.unschedule(self.countdown_right)
+            # self.scheduled_right = False
+
+            #stop left
+            # Clock.unschedule(self.countdown_left)
+            # self.scheduled_left = False
+            
             self.time_running = False
         
         else:
