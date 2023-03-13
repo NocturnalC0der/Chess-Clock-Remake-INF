@@ -86,8 +86,8 @@ ClockScreen:
                 id: stop_resume
                 size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
-                background_normal: './icons/pause_icon.png'
-                background_down: './icons/pause_icon_down.png'
+                text: 'STOP\n/RESUME'
+                font_size: 50
                 on_release: root.stop_resume(self)
 
 
@@ -95,15 +95,16 @@ ClockScreen:
                 id: reset
                 size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
-                background_normal: './icons/reset_icon.png'
-                background_down: './icons/reset_icon_down.png'
-
+                text: 'RESET'
+                font_size: 50
+                on_release: root.reset(self)
+            
             Button:
                 id: time_settings
                 size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
-                background_normal: './icons/settings_icon.png'
-                background_down: './icons/settings_icon_down.png'
+                text: 'SETTINGS'
+                font_size: 50
 
         
         BoxLayout:
@@ -127,6 +128,9 @@ ClockScreen:
                 on_release: root.start_switch_time_right(self)
 
 
+
+
+                
 
 
                 
