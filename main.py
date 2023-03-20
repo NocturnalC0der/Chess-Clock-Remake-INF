@@ -29,6 +29,8 @@ class ClockScreen(BoxLayout):
     
     time_left = StringProperty()
     time_right = StringProperty()
+    stop_resume_text = StringProperty()
+    paused = BooleanProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -51,7 +53,7 @@ class ClockScreen(BoxLayout):
 
         self.scheduled_left = False
         self.scheduled_right = False
-        self.was_running = ''
+        self.was_running = None
 
         self.time_running = False
         self.running_right = False
@@ -59,11 +61,15 @@ class ClockScreen(BoxLayout):
         self.paused = False
 
 
+
+        self.stop_resume_text = 'STOP'
+
+
     def start_switch_time_left(self, widget):
         # minutes, seconds = self.minutes, self.seconds
         # time_left = f'{minutes}:{seconds}'
         # print('Left btn before', f'Time_running: {self.time_running}, Self.paused: {self.paused}')
-      
+
         if not self.paused:
             self.time_running = True
             if self.scheduled_left:
@@ -75,18 +81,17 @@ class ClockScreen(BoxLayout):
                 self.count_right = Clock.schedule_interval(self.countdown_right, 1)
                 self.scheduled_right = True
                 print('scheduling right')
-
         
 
 
     def countdown_left(self, dt):
-        if self.total_seconds_left > 0 and self.time_running:
+        if self.total_seconds_left > 0:
             print('time running', self.ids.time_left.text)
+            
             self.total_seconds_left -= 1
-
             minutes, seconds = divmod(self.total_seconds_left, 60)
 
-            self.time_left = f'{minutes}:{seconds}'
+            self.time_left = f'{minutes:02}:{seconds:02}'
 
         else:
             Clock.unschedule(self.countdown_left)
@@ -97,6 +102,7 @@ class ClockScreen(BoxLayout):
         # minutes, seconds = self.minutes, self.seconds
         # time_left = f'{minutes}:{seconds}'\
         # print('Right btn before', f'Time_running: {self.time_running}, Self.paused: {self.paused}')
+        
 
         if not self.paused:
             self.time_running = True
@@ -109,15 +115,19 @@ class ClockScreen(BoxLayout):
                 self.count_left = Clock.schedule_interval(self.countdown_left, 1)
                 self.scheduled_left = True
                 print('scheduling left')
+
     
     def countdown_right(self, dt):
         if self.total_seconds_right > 0 and self.time_running:
             print('time running', self.ids.time_right.text)
+                
+     
             self.total_seconds_right -= 1
 
             minutes, seconds = divmod(self.total_seconds_right, 60)
 
-            self.time_right = f'{minutes}:{seconds}'
+        
+            self.time_right = f'{minutes:02}:{seconds:02}'
 
         else:
             Clock.unschedule(self.countdown_right)
@@ -127,9 +137,9 @@ class ClockScreen(BoxLayout):
 
 
     def stop_resume(self, widget): 
-        self.was_running = 'left' if self.scheduled_left == True else 'right'
+        self.was_running = self.count_left if self.scheduled_left == True else self.count_right
         if self.time_running: 
-            print('stopping',f'self.was_running: {self.was_running}' ,f'Time_running: {self.time_running}', f'Self.paused: {self.paused}')
+            
             # widget.background_normal = './icons/play_icon.png'
             # widget.background_down = './icons/play_icon_down.png'
             #stop_right
@@ -141,33 +151,36 @@ class ClockScreen(BoxLayout):
             # self.scheduled_left = False
             self.time_running = False
             self.paused = True
-            Clock.unschedule(self.count_left)
-            Clock.unschedule(self.count_right)
             
+            Clock.unschedule(self.was_running)
+            # Clock.unschedule(self.count_right)
+
+            self.stop_resume_text = 'RESUME'
+            print('stopping',f'self.was_running: {self.was_running}' ,f'Time_running: {self.time_running}', f'Self.paused: {self.paused}')
 
         else:
             # widget.background_normal = './icons/pause_icon.png'
             # widget.background_down = './icons/pause_icon_down.png'
             # print('starting', f'Time_running: {self.time_running}', f'Self.paused: {self.paused}')
-            if self.was_running == 'left':
-                self.count_left()
 
-            elif self.was_running == 'right':
-                self.count_right()
+            self.was_running()
 
             self.time_running = True
             self.paused = False
+            self.stop_resume_text = 'STOP'
 
+            print('resuming',f'self.was_running: {self.was_running}' ,f'Time_running: {self.time_running}', f'Self.paused: {self.paused}')
     
     def reset(self, widget):
 
-        if self.paused:
-            self.time_left = self.original_time_left
-            self.time_right = self.original_time_right
-            self.total_seconds_left = self.original_total_seconds_left
-            self.total_seconds_right = self.original_total_seconds_right
-            self.was_running = ''
-            self.paused = False
+        # if self.paused:
+        self.time_left = self.original_time_left
+        self.time_right = self.original_time_right
+        self.total_seconds_left = self.original_total_seconds_left
+        self.total_seconds_right = self.original_total_seconds_right
+        self.was_running = None
+        self.paused = False
+        self.stop_resume_text = 'STOP'
 
 
 
