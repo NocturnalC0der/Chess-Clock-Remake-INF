@@ -84,10 +84,11 @@ ClockScreen:
             
             Button:
                 id: stop_resume
+                text: root.stop_resume_text
                 size_hint: (1, 0.1)
                 pos_hint: {'center_x': 0.5}
-                text: 'STOP\n/RESUME'
                 font_size: 50
+                disabled: root.time_left == root.original_time_left and root.time_right == root.original_time_right
                 on_release: root.stop_resume(self)
 
 
@@ -97,6 +98,7 @@ ClockScreen:
                 pos_hint: {'center_x': 0.5}
                 text: 'RESET'
                 font_size: 50
+                disabled: not root.paused
                 on_release: root.reset(self)
             
             Button:
