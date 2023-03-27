@@ -1,58 +1,190 @@
-ClockScreen:
+WindowManager:
+    TimeEntryScreen:
+    ClockScreen:
 
+<TimePickLeft@ScrollView>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        GridLayout:
+            rows: 4
+            cols: 1
+            spacing: 20
+            size_hint: (1, 1)
+            pos_hint: {'center_x': 1, 'center_y': 1}
+
+            Button:
+                id: one_minutes_left
+                text: '01:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: three_minutes_left
+                text: '03:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+                
+
+            Button:
+                id: five_minutes_left
+                text: '05:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: ten_minutes_left
+                text: '10:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+
+<TimePickRight@ScrollView>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        GridLayout:
+            rows: 4
+            cols: 1
+            spacing: 20
+            size_hint: (1, 1)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            Button:
+                id: one_minutes_right
+                text: '01:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: three_minutes_right
+                text: '03:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+                
+
+            Button:
+                id: five_minutes_right
+                text: '05:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
+
+            Button:
+                id: ten_minutes_right
+                text: '10:00'
+                size_hint: (1, 1)
+                font_size: 20
+                font_name: 'fonts/Lcd.ttf'
 
 <TimeEntryScreen>:
+
+    name: 'time_pick'
 
     BoxLayout:
         orientation: 'vertical'
 
         Label:
             id: timeenterheading
-            text: 'Slect Times'
+            text: 'Select Times'
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
             size_hint: (1, 0.2)
-            font_size: 100
+            font_size: 80
             font_name: 'fonts/Lcd.ttf'
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            
+            GridLayout:
+                rows: 4
+                cols: 1
+                spacing: 20
+                size_hint: (0.5, 1)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
+                Button:
+                    id: one_minutes_left
+                    text: '01:42'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_left(self)
+            
 
-        GridLayout:
-            rows: 4
-            cols: 1
-            spacing: 40
-            size_hint: (0.5, 0.8)
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                Button:
+                    id: three_minutes_left
+                    text: '03:32'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_left(self)
 
-            Button:
-                id: one_minutes
-                text: '01:00'
-                size_hint: (5, 0.2)
-                font_size: 20
-                font_name: 'fonts/Lcd.ttf'
+                Button:
+                    id: five_minutes_left
+                    text: '05:02'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_left(self)
 
-            Button:
-                id: three_minutes
-                text: '03:00'
-                size_hint: (5, 0.2)
-                font_size: 20
-                font_name: 'fonts/Lcd.ttf'
-                
+                Button:
+                    id: ten_minutes_left
+                    text: '10:01'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_left(self)
 
-            Button:
-                id: five_minutes
-                text: '05:00'
-                size_hint: (5, 0.2)
-                font_size: 20
-                font_name: 'fonts/Lcd.ttf'
+            GridLayout:
+                rows: 4
+                cols: 1
+                spacing: 20
+                size_hint: (0.5, 1)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-            Button:
-                id: ten_minutes
-                text: '10:00'
-                size_hint: (5, 0.2)
-                font_size: 20
-                font_name: 'fonts/Lcd.ttf'
+                Button:
+                    id: one_minutes_right
+                    text: '01:40'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_right(self)
+
+                Button:
+                    id: three_minutes_right
+                    text: '03:06'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_right(self)
+
+                Button:
+                    id: five_minutes_right
+                    text: '05:40'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_right(self)
+
+                Button:
+                    id: ten_minutes_right
+                    text: '10:00'
+                    size_hint: (1, 1)
+                    font_size: 50
+                    font_name: 'fonts/Lcd.ttf'
+                    on_release: root.pick_right(self)
+
 
     
 <ClockScreen>:
+
+    name: 'main_window'
 
     BoxLayout:
         orientation: 'horizontal'
@@ -107,6 +239,9 @@ ClockScreen:
                 pos_hint: {'center_x': 0.5}
                 text: 'SETTINGS'
                 font_size: 50
+                on_release: 
+                    app.root.current = 'time_pick'
+                    root.manager.transition.direction = 'right'
 
         
         BoxLayout:
@@ -128,7 +263,6 @@ ClockScreen:
                 font_name: 'fonts/Lcd.ttf'
                 background_color: (0, 1, 1, 1)
                 on_release: root.start_switch_time_right(self)
-
 
 
 
