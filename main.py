@@ -11,6 +11,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.metrics import dp
 from kivy.properties import StringProperty, BooleanProperty
 from kivy.properties import NumericProperty
@@ -18,14 +19,97 @@ from kivy.uix.label import Label
 import random, time
 from kivy.clock import Clock
 
-
 class CustomDropDown(DropDown):
     pass
 
-class TimeEntryScreen(BoxLayout):        
-    pass
+class TimeEntryScreen(BoxLayout, Screen): 
 
-class ClockScreen(BoxLayout):
+    # dropdown = CustomDropDown()
+    # mainbutton = Button(text = 'Select Time', font_name = 'fonts/Lcd.ttf', size_hint = (0.2, 0.2), pos_hint = {'center_x': 0.5, 'center_y': 0.5})
+    # mainbutton.bind(on_release = dropdown.open)
+    # dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
+    
+    # Screen.manager.transition.direction = 'left'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.time_left = ''
+        self.time_right = ''
+
+        self.original_total_seconds_left = 0
+        self.original_total_seconds_right = 0
+
+        self.time_button_ids = [self.ids.one_minutes_left, self.ids.three_minutes_left,
+                           self.ids.five_minutes_left, self.ids.ten_minutes_left]
+
+        self.selected_left = 0
+        self.selected_right = 0
+
+    
+    def pick_left(self, widget):
+        
+        # for i in self.time_button_ids:
+        #     if i == widget:
+        self.selected_left = self.time_button_ids[self.time_button_ids.index(widget)]
+
+        for i in self.time_button_ids:
+            if i.disabled == True:
+                i.disabled == False
+
+        widget.disabled = True
+
+        time_str = widget.text
+
+        minutes_left = int(time_str[0:2])
+        seconds_left = int(time_str[3:])
+
+        #One way:
+        # time_left = f'{self.minutes_left:02}:{self.seconds_left:02}'
+
+        #Another way:
+        original_total_seconds_left = (minutes_left * 60) + seconds_left
+        total_seconds_left = (minutes_left * 60) + seconds_left
+
+        minutes, seconds = divmod(total_seconds_left, 60)
+
+        time_left = f'{minutes:02}:{seconds:02}'
+        
+        self.original_total_seconds_left = original_total_seconds_left
+        self.time_left = time_left
+        
+        print(minutes, seconds, time_left)
+
+        # return (time_left, original_total_seconds_left)
+
+
+    def pick_right(self, widget):
+
+        time_str = widget.text
+
+        minutes_right = int(time_str[0:2])
+        seconds_right = int(time_str[3:])
+
+        #One way:
+        # time_right = f'{self.minutes_right:02}:{self.seconds_right:02}'
+
+        #Another way:
+        original_total_seconds_right = (minutes_right * 60) + seconds_right
+        total_seconds_right = (minutes_right * 60) + seconds_right
+
+        minutes, seconds = divmod(total_seconds_right, 60)
+
+        time_right = f'{minutes:02}:{seconds:02}'
+
+        self.original_total_seconds_right = original_total_seconds_right
+        self.time_right = time_right
+
+        print(minutes, seconds, time_right)
+
+        # return (time_right, original_total_seconds_right)
+
+
+class ClockScreen(BoxLayout, Screen):
     
     time_left = StringProperty()
     time_right = StringProperty()
@@ -35,21 +119,37 @@ class ClockScreen(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.demo_time = ('2', '10')
-        self.minutes = self.demo_time[0] if len(self.demo_time[0]) == 2 else '0' + self.demo_time[0]
-        self.seconds = self.demo_time[1] if len(self.demo_time[1]) == 2 else '0' + self.demo_time[1]
+        # self.manager.transition.direction = 'right'
 
-        self.original_time_left = f'{self.minutes}:{self.seconds}'
-        self.original_time_right = f'{self.minutes}:{self.seconds}'
+        self.TimeEntryClass = TimeEntryScreen()
 
-        self.time_left = f'{self.minutes}:{self.seconds}'
-        self.time_right = f'{self.minutes}:{self.seconds}'
+        self.time_left = self.TimeEntryClass.time_left
+        self.time_right = self.TimeEntryClass.time_right
 
-        self.original_total_seconds_left = int(self.minutes) * 60 + int(self.seconds)
-        self.original_total_seconds_right = int(self.minutes) * 60 + int(self.seconds)
+        self.original_total_seconds_left = self.TimeEntryClass.original_total_seconds_left
+        self.original_total_seconds_right = self.TimeEntryClass.original_total_seconds_right
 
-        self.total_seconds_left = int(self.minutes) * 60 + int(self.seconds)
-        self.total_seconds_right = int(self.minutes) * 60 + int(self.seconds)
+        self.total_seconds_left = self.original_total_seconds_left
+        self.total_seconds_right = self.original_total_seconds_right
+
+        self.original_time_left = self.time_left
+        self.original_time_right = self.time_right
+        
+        # self.demo_time = ('2', '10')
+        # self.minutes = self.demo_time[0] if len(self.demo_time[0]) == 2 else '0' + self.demo_time[0]
+        # self.seconds = self.demo_time[1] if len(self.demo_time[1]) == 2 else '0' + self.demo_time[1]
+
+        # self.original_time_left = f'{self.minutes}:{self.seconds}'
+        # self.original_time_right = f'{self.minutes}:{self.seconds}'
+
+        # self.time_left = f'{self.minutes}:{self.seconds}'
+        # self.time_right = f'{self.minutes}:{self.seconds}'
+
+        # self.original_total_seconds_left = int(self.minutes) * 60 + int(self.seconds)
+        # self.original_total_seconds_right = int(self.minutes) * 60 + int(self.seconds)
+
+        # self.total_seconds_left = int(self.minutes) * 60 + int(self.seconds)
+        # self.total_seconds_right = int(self.minutes) * 60 + int(self.seconds)
 
         self.scheduled_left = False
         self.scheduled_right = False
@@ -183,15 +283,12 @@ class ClockScreen(BoxLayout):
         self.stop_resume_text = 'STOP'
 
 
+class WindowManager(ScreenManager):
+
+    pass
 
 class ChessClockApp(App):
     pass
-
-
-dropdown = CustomDropDown()
-mainbutton = Button(text = 'Select Time', font_name = 'fonts/Lcd.ttf', size_hint = (0.2, 0.2), pos_hint = {'center_x': 0.5, 'center_y': 0.5})
-mainbutton.bind(on_release = dropdown.open)
-dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
 
 
 ChessClockApp().run()
