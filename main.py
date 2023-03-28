@@ -40,26 +40,24 @@ class TimeEntryScreen(BoxLayout, Screen):
         self.original_total_seconds_left = 0
         self.original_total_seconds_right = 0
 
-        self.time_button_ids = [self.ids.one_minutes_left, self.ids.three_minutes_left,
-                           self.ids.five_minutes_left, self.ids.ten_minutes_left]
+        # self.time_button_ids = [self.ids.one_minutes_left, self.ids.three_minutes_left,
+        #                    self.ids.five_minutes_left, self.ids.ten_minutes_left]
 
         self.selected_left = 0
         self.selected_right = 0
 
     
-    def pick_left(self, widget):
+    def pick_left(self, clicked_btn, btn2, btn3, btn4):
         
-        # for i in self.time_button_ids:
-        #     if i == widget:
-        self.selected_left = self.time_button_ids[self.time_button_ids.index(widget)]
+        not_cliked = [btn2, btn3, btn4]
 
-        for i in self.time_button_ids:
+        for i in not_cliked:
             if i.disabled == True:
-                i.disabled == False
+                i.disabled = False
 
-        widget.disabled = True
+        clicked_btn.disabled = True
 
-        time_str = widget.text
+        time_str = clicked_btn.text
 
         minutes_left = int(time_str[0:2])
         seconds_left = int(time_str[3:])
@@ -78,14 +76,22 @@ class TimeEntryScreen(BoxLayout, Screen):
         self.original_total_seconds_left = original_total_seconds_left
         self.time_left = time_left
         
-        print(minutes, seconds, time_left)
+        # print(minutes, seconds, time_left)
 
         # return (time_left, original_total_seconds_left)
 
 
-    def pick_right(self, widget):
+    def pick_right(self, clicked_btn, btn2, btn3, btn4):
 
-        time_str = widget.text
+        not_cliked = [btn2, btn3, btn4]
+
+        for i in not_cliked:
+            if i.disabled == True:
+                i.disabled = False
+
+        clicked_btn.disabled = True
+
+        time_str = clicked_btn.text
 
         minutes_right = int(time_str[0:2])
         seconds_right = int(time_str[3:])
@@ -104,9 +110,13 @@ class TimeEntryScreen(BoxLayout, Screen):
         self.original_total_seconds_right = original_total_seconds_right
         self.time_right = time_right
 
-        print(minutes, seconds, time_right)
+        # print(minutes, seconds, time_right)
 
         # return (time_right, original_total_seconds_right)
+
+    def pressed_play(self):
+        # print(self.time_left, self.time_right)
+        pass
 
 
 class ClockScreen(BoxLayout, Screen):
