@@ -110,9 +110,9 @@ WindowManager:
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 font_size: 50
                 on_release:
-                    #root.pressed_play() 
+                    root.pressed_play() 
                     root.manager.current = 'main_window'
-                    root.manager.transition.direction: 'right'
+                    root.manager.transition.direction: 'left'
         
         BoxLayout:
             orientation: 'horizontal'
@@ -203,6 +203,7 @@ WindowManager:
 
     name: 'main_window'
 
+
     BoxLayout:
         orientation: 'horizontal'
         
@@ -247,7 +248,7 @@ WindowManager:
                 pos_hint: {'center_x': 0.5}
                 text: 'RESET'
                 font_size: 50
-                disabled: not root.paused
+                #disabled: not root.paused
                 on_release: root.reset(self)
             
             Button:
