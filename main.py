@@ -21,41 +21,43 @@ from kivy.clock import Clock
 from kivy.storage.jsonstore import JsonStore
 
 
+# class TimeStorage():
+#     def __init__(self, time_left, time_right):
+#         storage = JsonStore('storage.json')
+        
+#         self.time_left = time_left
+#         self.time_right = time_right
+
+#         storage.put('Time left', time_left=self.time_left)
+#         storage.put('Time right', time_right=self.time_right)
+
+    
+
+
 class TimeEntryScreen(BoxLayout, Screen): 
 
-    # dropdown = CustomDropDown()
-    # mainbutton = Button(text = 'Select Time', font_name = 'fonts/Lcd.ttf', size_hint = (0.2, 0.2), pos_hint = {'center_x': 0.5, 'center_y': 0.5})
-    # mainbutton.bind(on_release = dropdown.open)
-    # dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
     
-    # Screen.manager.transition.direction = 'left'
 
+    minutes_right = 0
+    minutes_left = 0
+    seconds_right = 0
+    seconds_left = 0
+
+    original_total_seconds_left = 0
+    original_total_seconds_right = 0
+
+    selected_left = ''
+    selected_right = ''
+    
+    btn_list_left = []
+    btn_list_right = []
+
+ 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.time_left = ''
-        self.time_right = ''
-
-        self.minutes_right = 0
-        self.minutes_left = 0
-        self.seconds_right = 0
-        self.seconds_left = 0
-
-        self.original_total_seconds_left = 0
-        self.original_total_seconds_right = 0
-
-        self.selected_left = ''
-        self.selected_right = ''
         
-        self.btn_list_left = []
-        self.btn_list_right = []
-
-        self.storage = JsonStore('storage.json')
-        self.storage.put('Time left', time_left=self.time_left, total_seconds_left=self.original_total_seconds_left)
-        self.storage.put('Time right', time_right=self.time_right, total_seconds_right=self.original_total_seconds_right)
-
-        # self.storage.get('Time right')['total_seconds_right'] == None
-        # self.storage.get('Time right')['total_seconds_right'] == None
+        self.time_left = 0
+        self.time_right = 0
 
     
     def pick_left(self, clicked_btn, btn2, btn3, btn4):
@@ -85,10 +87,9 @@ class TimeEntryScreen(BoxLayout, Screen):
         self.time_left = f'{minutes:02}:{seconds:02}'
         
         
-        # print(minutes, seconds, self.time_left)
-        # print(not_clicked == self.btn_list_left)
+        print('This is the time for the left side: ', self.time_left)
 
-        return (self.time_left, self.original_total_seconds_left)
+        return self.time_left
 
 
     def pick_right(self, clicked_btn, btn2, btn3, btn4):
@@ -118,30 +119,40 @@ class TimeEntryScreen(BoxLayout, Screen):
 
         self.time_right = f'{minutes:02}:{seconds:02}'
 
+        print('This is the time for the right side: ', self.time_right)
 
-        # print(minutes, seconds, self.time_left)
-        # print(not_clicked == self.btn_list_right)
 
-        return (self.time_right, self.original_total_seconds_right)
-
+        return self.time_right
 
     def pressed_play(self):
-        print(self.time_left, self.original_total_seconds_left)
-        print(self.time_right, self.original_total_seconds_right)
+        # print(self.time_left, self.original_total_seconds_left)
+        # print(self.time_right, self.original_total_seconds_right)
 
         # self.storage.put('Time left')['time_left'] = self.time_left
         # self.storage.put('Time left')['total_seconds_left'] = self.original_total_seconds_left
 
-        self.storage.put('Time left', time_left=self.time_left, total_seconds_left=self.original_total_seconds_left)
-        self.storage.put('Time right', time_right=self.time_right, total_seconds_right=self.original_total_seconds_right)
+        # self.storage.put('Time left', time_left=self.time_left, total_seconds_left=self.original_total_seconds_left)
+        # self.storage.put('Time right', time_right=self.time_right, total_seconds_right=self.original_total_seconds_right)
 
-        print(self.storage.get('Time left'))
-        print(self.storage.get('Time right'))
+        # print(self.storage.get('Time left'), self.storage.get('Time right'), 'PRINTED IN PRESSED PLAY')
+        # print(self.pick_left(*self.btn_list_left), self.pick_right(*self.btn_list_right))
+
+        
+        # self.storage.put('Time left', time_left=self.time_left, total_seconds_left=self.original_total_seconds_left)
+        # self.storage.put('Time right', time_right=self.time_right, total_seconds_right=self.original_total_seconds_right)
+
+        print('Pressed play, times:', self.time_left, self.time_right)
+        return (self.time_left, self.time_right)
+
+
+
 
 class ClockScreen(BoxLayout, Screen):
     
-    time_left = StringProperty()
-    time_right = StringProperty()
+
+    storage = TimeEntryScreen.pressed_play(TimeEntryScreen)
+    time_left = StringProperty(storage[0])
+    time_right = StringProperty(storage[1])
     stop_resume_text = StringProperty()
     paused = BooleanProperty()
 
@@ -150,13 +161,10 @@ class ClockScreen(BoxLayout, Screen):
 
         # self.manager.transition.direction = 'right'
 
-        self.TimeEntryClass = TimeEntryScreen()
-
         # self.selected_left = self.TimeEntryClass.selected_left.text
         # self.selected_right = self.TimeEntryClass.selected_right.text
-        self.storage = JsonStore('storage.json')
         
-
+    
         #TIME LEFT MAKING
         # self.text_minutes_left = int(self.selected_left[0:2])
         # self.text_seconds_left = int(self.selected_left[3:])
@@ -168,14 +176,19 @@ class ClockScreen(BoxLayout, Screen):
 
         # self.time_left = f'{self.minutes:02}:{self.seconds:02}'
         # self.time_left = '10:23'
-        self.time_left = self.storage.get('Time left')['time_left']
-        self.time_right = self.storage.get('Time right')['time_right']
+
+        # storage = JsonStore('storage.json')
+
+        # self.time_left = self.storage[0]
+        # self.time_right = self.storage[1]
 
         self.original_time_right = self.time_left
         self.original_time_left = self.time_right
 
-        self.total_seconds_left = self.storage.get('Time left')['total_seconds_left']
-        self.total_seconds_right = self.storage.get('Time right')['total_seconds_right']
+        # self.total_seconds_left = self.storage[0]['total_seconds_left']
+        # self.total_seconds_right = self.storage[1]['total_seconds_right']
+
+        
 
         #--------------------------------------------------------------------------------------#
                 
@@ -209,8 +222,12 @@ class ClockScreen(BoxLayout, Screen):
 
         self.stop_resume_text = 'STOP'
 
+    def on_enter(self):
+        print(self.storage)
+
 
     def start_switch_time_left(self, widget):
+
 
         if not self.paused:
             self.time_running = True
@@ -320,15 +337,24 @@ class ClockScreen(BoxLayout, Screen):
         # self.paused = False
         # self.stop_resume_text = 'STOP'
         # print(self.TimeEntryClass.time_right, type(self.TimeEntryClass.time_right), list(self.TimeEntryClass.time_right))
-        print(self.storage.get('Time left'))
-        print(self.storage.get('Time right'))
+        print(type(self.time_left), type(self.time_right))
 
 
 class WindowManager(ScreenManager):
     pass
 
 class ChessClockApp(App):
-    pass
+
+    # storage = JsonStore('storage.json')
+    # t = TimeEntryScreen()
+
+    # storage.put('Time left', time_left=t.time_left, total_seconds_left=t.original_total_seconds_left)
+    # storage.put('Time right', time_right=t.time_right, total_seconds_right=t.original_total_seconds_right)
+    def build(self):
+
+
+        return super().build()
+
 
 
 ChessClockApp().run()
