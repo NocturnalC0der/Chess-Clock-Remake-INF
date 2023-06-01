@@ -86,6 +86,8 @@ WindowManager:
 <TimeEntryScreen>:
 
     name: 'time_pick'
+    time_left: root.time_left
+    time_right: root.time_right
 
     BoxLayout:
         orientation: 'vertical'
@@ -130,7 +132,7 @@ WindowManager:
                     text: '01:42'
                     size_hint: (1, 1)
                     font_size: 50
-                    ##font_name: 'fonts/Lcd.ttf'
+                    #font_name: 'fonts/Lcd.ttf'
                     on_release: root.pick_left(self, three_minutes_left, five_minutes_left, ten_minutes_left)
             
 
@@ -139,7 +141,7 @@ WindowManager:
                     text: '03:32'
                     size_hint: (1, 1)
                     font_size: 50
-                    ##font_name: 'fonts/Lcd.ttf'
+                    #font_name: 'fonts/Lcd.ttf'
                     on_release: root.pick_left(self, one_minutes_left, five_minutes_left, ten_minutes_left)
 
                 Button:
@@ -202,7 +204,7 @@ WindowManager:
 <ClockScreen>:
 
     name: 'main_window'
-
+ 
 
     BoxLayout:
         orientation: 'horizontal'
@@ -213,7 +215,7 @@ WindowManager:
 
             Label:
                 id: time_left
-                text: root.time_left
+                text: root.time_right
                 size_hint: (1, 0.25)
                 font_size: 80
                 #font_name: 'fonts/Lcd.ttf'
@@ -268,7 +270,7 @@ WindowManager:
 
             Label:
                 id: time_right
-                text: root.time_right
+                text: root.time_left
                 size_hint: (1, 0.25)
                 font_size: 80
                 #font_name: 'fonts/Lcd.ttf'
@@ -281,7 +283,6 @@ WindowManager:
                 #font_name: 'fonts/Lcd.ttf'
                 background_color: (0, 1, 1, 1)
                 on_release: root.start_switch_time_right(self)
-
 
 
                 
