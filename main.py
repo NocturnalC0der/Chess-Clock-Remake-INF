@@ -13,7 +13,7 @@ from kivy.uix.stacklayout import StackLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.metrics import dp
-from kivy.properties import StringProperty, BooleanProperty
+from kivy.properties import StringProperty, BooleanProperty, ObjectProperty
 from kivy.properties import NumericProperty
 from kivy.uix.label import Label
 import random, time
@@ -37,7 +37,9 @@ from kivy.storage.jsonstore import JsonStore
 class TimeEntryScreen(BoxLayout, Screen): 
 
     
-
+    time_left = 'default'
+    time_right = 'default'
+    
     minutes_right = 0
     minutes_left = 0
     seconds_right = 0
@@ -52,12 +54,20 @@ class TimeEntryScreen(BoxLayout, Screen):
     btn_list_left = []
     btn_list_right = []
 
+    clicked_btn_left = ObjectProperty(None)
+    clicked_btn_right = ObjectProperty(None)
+
+    clicked_id_left = 'defaut id'
+    clicked_id_right = 'default id'
+
+    run_count = 0
+
  
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    # def __init__(self, time_left, time_right, **kwargs):
+    #     super().__init__(**kwargs)
         
-        self.time_left = 0
-        self.time_right = 0
+    #     self.time_left = time_left
+    #     self.time_right = time_right
 
     
     def pick_left(self, clicked_btn, btn2, btn3, btn4):
@@ -140,19 +150,42 @@ class TimeEntryScreen(BoxLayout, Screen):
         
         # self.storage.put('Time left', time_left=self.time_left, total_seconds_left=self.original_total_seconds_left)
         # self.storage.put('Time right', time_right=self.time_right, total_seconds_right=self.original_total_seconds_right)
+        # left_btns = [self.ids.one_minutes_left, self.ids.three_mintues_left, self.ids.five_minutes_left, self.ids.ten_minutes_left]
+        # right_btns = [self.ids.one_minutes_right, self.ids.three_mintues_right, self.ids.five_minutes_right, self.ids.ten_minutes_right]
 
-        print('Pressed play, times:', self.time_left, self.time_right)
-        return (self.time_left, self.time_right)
+        # if self.time_left == 'default' and self.time_right == 'default':
+        
+
+        temp_left = self.time_left
+        temp_right = self.time_right
+
+        # print(f'Before {self.time_left}, {self.time_right}')
+        # temp_left = self.time_left
+        # temp_right = self.time_right
 
 
+        # if 'left' in clicked_btn_id:
+        #     print(self.time_left == clicked_btn.text)
+        #     # self.clicked_btn_left = clicked_btn
+        #     print(self.time_left)
+        
+        # elif 'right' in clicked_btn_id:
+        #     self.time_right = clicked_btn.text
+        #     # self.clicked_btn_right = clicked_btn
+        #     print(self.time_right)
+
+    
+
+        print(temp_left, temp_right)
+
+        return temp_left, temp_right
 
 
 class ClockScreen(BoxLayout, Screen):
     
 
-    storage = TimeEntryScreen.pressed_play(TimeEntryScreen)
-    time_left = StringProperty(storage[0])
-    time_right = StringProperty(storage[1])
+    time_left = StringProperty()
+    time_right = StringProperty()
     stop_resume_text = StringProperty()
     paused = BooleanProperty()
 
@@ -223,7 +256,16 @@ class ClockScreen(BoxLayout, Screen):
         self.stop_resume_text = 'STOP'
 
     def on_enter(self):
-        print(self.storage)
+        # T = TimeEntryScreen()
+
+        # print(T.pressed_play(T.clicked_btn_left, T.clicked_id_left))
+
+
+        # self.time_left = T.time_left
+        # self.time_right = T.time_right
+
+        self.time_left = TimeEntryScreen.pressed_play(TimeEntryScreen)[0]
+        self.time_right = TimeEntryScreen.pressed_play(TimeEntryScreen)[1]
 
 
     def start_switch_time_left(self, widget):
