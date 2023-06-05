@@ -126,6 +126,7 @@ WindowManager:
                 spacing: 20
                 size_hint: (0.5, 1)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                id: left_column
 
                 Button:
                     id: one_minutes_left
@@ -133,8 +134,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_left(self, three_minutes_left, five_minutes_left, ten_minutes_left)
-            
+                    on_release: 
+                        root.pick_left(self, three_minutes_left, five_minutes_left, ten_minutes_left)
+                        #root.pressed_play(self, 'one_minutes_left')
 
                 Button:
                     id: three_minutes_left
@@ -142,7 +144,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_left(self, one_minutes_left, five_minutes_left, ten_minutes_left)
+                    on_release: 
+                        root.pick_left(self, one_minutes_left, five_minutes_left, ten_minutes_left)
+                        #root.pressed_play(self, 'three_minutes_left')
 
                 Button:
                     id: five_minutes_left
@@ -150,7 +154,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_left(self, one_minutes_left, three_minutes_left, ten_minutes_left)
+                    on_release: 
+                        root.pick_left(self, one_minutes_left, three_minutes_left, ten_minutes_left)
+                        #root.pressed_play(self, 'five_minutes_left')
 
                 Button:
                     id: ten_minutes_left
@@ -158,7 +164,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_left(self, one_minutes_left, three_minutes_left, five_minutes_left)
+                    on_release: 
+                        root.pick_left(self, one_minutes_left, three_minutes_left, five_minutes_left)
+                        #root.pressed_play(self, 'ten_minutes_left')
 
             GridLayout:
                 rows: 4
@@ -166,6 +174,7 @@ WindowManager:
                 spacing: 20
                 size_hint: (0.5, 1)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                id: right_column
 
                 Button:
                     id: one_minutes_right
@@ -173,7 +182,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_right(self, three_minutes_right, five_minutes_right, ten_minutes_right)
+                    on_release: 
+                        root.pick_right(self, three_minutes_right, five_minutes_right, ten_minutes_right)
+                        #root.pressed_play(self, 'one_minutes_right')
 
                 Button:
                     id: three_minutes_right
@@ -181,7 +192,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_right(self, one_minutes_right, five_minutes_right, ten_minutes_right)
+                    on_release: 
+                        root.pick_right(self, one_minutes_right, five_minutes_right, ten_minutes_right)
+                       #root.pressed_play(self, 'three_minutes_right')
 
                 Button:
                     id: five_minutes_right
@@ -189,7 +202,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_right(self, one_minutes_right, three_minutes_right, ten_minutes_right)
+                    on_release: 
+                        root.pick_right(self, one_minutes_right, three_minutes_right, ten_minutes_right)
+                        #root.pressed_play(self, 'five_minutes_right')
 
                 Button:
                     id: ten_minutes_right
@@ -197,8 +212,9 @@ WindowManager:
                     size_hint: (1, 1)
                     font_size: 50
                     #font_name: 'fonts/Lcd.ttf'
-                    on_release: root.pick_right(self, one_minutes_right, three_minutes_right, five_minutes_right)
-
+                    on_release: 
+                        root.pick_right(self, one_minutes_right, three_minutes_right, five_minutes_right)
+                        #root.pressed_play(self, 'ten_minutes_right')
 
     
 <ClockScreen>:
@@ -283,17 +299,3 @@ WindowManager:
                 #font_name: 'fonts/Lcd.ttf'
                 background_color: (0, 1, 1, 1)
                 on_release: root.start_switch_time_right(self)
-
-
-                
-
-
-                
-
-                
-
-
-
-
-
-                
